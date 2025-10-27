@@ -1,0 +1,14 @@
+# build directories
+build/
+
+# object files
+*.o
+*.obj
+
+#executables
+*.exe
+*.out
+*.a
+*.so
+*.dll
+*.dylib
