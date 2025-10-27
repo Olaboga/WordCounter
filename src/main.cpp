@@ -3,6 +3,7 @@
 #include <ranges>
 #include <string>
 #include <charconv>
+#include <algorithm>
 
 int main(int argc, char** argv)
 {
@@ -46,6 +47,18 @@ int main(int argc, char** argv)
 		{
 			std::cout << "No --" << arguments::count << " argument used, falling back to default: " << DEFAULT_TOP_WORDS_COUNT << ".\n";
 		}
+
+		using pair = std::pair<std::string, int>;
+		std::vector<pair> word_vec(word_map.cbegin(), word_map.cend());
+
+		std::sort(word_vec.begin(), word_vec.end(), [](const auto& a, const auto& b) {return a.second > b.second; });
+
+		for (auto i = 0; i < top_word_list_len; ++i)
+			std::cout << word_vec[i].second << " " << word_vec[i].first << "/n";
+	}
+	else
+	{
+		std::cout << "Use --file=filepath.";
 	}
 	return 0;
 }
