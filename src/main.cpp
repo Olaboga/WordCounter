@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 			if(word_map.contains(w))
 				++word_map[w];
 			else
-				word_map[w] = 0;
+				word_map[w] = 1;
 		}
 		
 		auto cntStr = args.get(std::string(arguments::count));
