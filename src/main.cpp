@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 		if(!file)
 		{
 			std::cerr << "Cannot open " << filePath.value() << '\n';
-			return 0;
+			return 1;
 		}
 
 		auto words = std::ranges::istream_view<std::string>(file);
@@ -29,10 +29,22 @@ int main(int argc, char** argv)
 				word_map[w] = 0;
 		}
 		
-		auto cnt = args.get(std::string(arguments::count));
-		uint32_t top_word_list_len = cnt.value_or(DEFAULT_TOP_WORDS_COUNT);
-		if(verbose && !cnt.has_value())
-			std::cout << "No --" << arguments::count << " argument used, falling back to default: " << top_word_list_len << ".\n";
+		auto cntStr = args.get(std::string(arguments::count));
+
+		uint32_t top_word_list_len = DEFAULT_TOP_WORDS_COUNT;
+		if (cntStr.has_value())
+		{
+			auto [ptr, ec] = std::from_chars(cntStr.value().data(), cntStr.value().data() + cntStr.value().size(), top_word_list_len);
+			if (ec != std::errc())
+			{
+				std::cout << "std::from_chars() failed, invalid --count parameter!\n";
+				return static_cast<int>(ec);
+			}
+		}
+		else if (verbose)
+		{
+			std::cout << "No --" << arguments::count << " argument used, falling back to default: " << DEFAULT_TOP_WORDS_COUNT << ".\n";
+		}
 	}
 	return 0;
 }
