@@ -33,6 +33,7 @@ namespace arguments{
 
 	ArgParser::~ArgParser()
 	{
-		std::cout << "ArgParser::~ArgParser()" << std::endl;
+		if(get(std::string(arguments::verbose)) != std::nullopt)
+			std::cout << "ArgParser::~ArgParser()" << std::endl;
 	}
 }
