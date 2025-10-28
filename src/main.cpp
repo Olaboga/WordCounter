@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 		std::sort(word_vec.begin(), word_vec.end(), [](const auto& a, const auto& b) {return a.second > b.second; });
 
 		for (auto i = 0; i < top_word_list_len; ++i)
-			std::cout << word_vec[i].second << " " << word_vec[i].first << "/n";
+			std::cout << word_vec[i].second << " " << word_vec[i].first << "\n";
 	}
 	else
 	{
